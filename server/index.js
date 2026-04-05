@@ -23,6 +23,37 @@ app.use('/api/spinner', spinnerRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/referral', referralRoutes);
 app.use('/api/admin', adminRoutes);
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) return; // already connected, skip
+
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+    });
+    isConnected = true;
+    console.log("✅ Connected to MongoDB");
+
+    const SystemSettings = require("./models/SystemSettings");
+    const settingsCount = await SystemSettings.countDocuments();
+    if (settingsCount === 0) {
+      await new SystemSettings({}).save();
+      console.log("⚙️ Default System Settings initialized.");
+    }
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+    throw err; // production mein bhi throw karo!
+  }
+};
+app.use(async (req, res, next) => {
+  try {
+    await connectDB(); // har request pe check karo — already connected hai toh skip
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Database connection failed" });
+  }
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -38,25 +69,7 @@ app.use((err, req, res, next) => {
 // Connect to MongoDB and start server
 const PORT = process.env.PORT || 5000;
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ Connected to MongoDB');
 
-    // Initialize System Settings
-    const SystemSettings = require('./models/SystemSettings');
-    const settingsCount = await SystemSettings.countDocuments();
-    if (settingsCount === 0) {
-      await new SystemSettings({}).save();
-      console.log('⚙️ Default System Settings initialized.');
-    }
-  } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
-    if (process.env.NODE_ENV !== 'production') {
-      process.exit(1);
-    }
-  }
-};
 
 connectDB();
 
