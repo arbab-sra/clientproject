@@ -7,11 +7,6 @@ const nextConfig = {
         source: "/api/:path*",
         destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
       },
-      // ← Yeh add karo
-      {
-        source: "/:path*", // /auth/signup bhi catch karega
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`, // /api/auth/signup pe bhejega
-      },
     ];
   },
 };
