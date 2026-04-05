@@ -5,7 +5,8 @@ import { gamesAPI } from '@/services/api';
 import AuthGuard from '@/components/AuthGuard';
 import Header from '@/components/Header';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { clonePageVaryPathWithNewSearchParams } from 'next/dist/client/components/segment-cache/vary-path';
+import { useRouter } from 'next/navigation';
 const GAME_CONFIGS = {
   wingo: {
     name: 'Win Go',
@@ -859,7 +860,6 @@ function MinesGameUI({ betAmount, user, onResult, onBalanceUpdate }) {
 function GameContent({ gameId }) {
   const config = GAME_CONFIGS[gameId];
   const { user, updateUser } = useAuth();
-
   const [betAmount, setBetAmount] = useState(10);
   const [customBet, setCustomBet] = useState('');
   const [choice, setChoice] = useState(null);
@@ -872,8 +872,12 @@ function GameContent({ gameId }) {
   const [history, setHistory] = useState([]);
 
   const insufficientBalance = user.balance < MIN_PLAY_BALANCE;
-
+const router = useRouter();
   // Only fetch history on mount — not on every user/balance update
+  if (user.balance <=100){
+    alert("Insufficient Balance Show  That We Can Not Play This Game");
+    router.push("/deposit");
+  }
   useEffect(() => {
     gamesAPI.getHistory({ gameType: gameId }).then(res => setHistory(res.data.results || [])).catch(() => {});
   }, [gameId]);
