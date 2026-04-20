@@ -7,47 +7,51 @@ import Header from '@/components/Header';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clonePageVaryPathWithNewSearchParams } from 'next/dist/client/components/segment-cache/vary-path';
 import { useRouter } from 'next/navigation';
+import { Helicopter } from "lucide-react";
+
 const GAME_CONFIGS = {
   wingo: {
-    name: 'Win Go',
-    emoji: '🎯',
-    gradient: 'from-green-400 to-emerald-600',
-    description: 'Predict the color or number. Green/Red pays 2x, Violet pays 4.5x, Number pays 9x!',
+    name: "Win Go",
+    emoji: "🎯",
+    gradient: "from-green-400 to-emerald-600",
+    description:
+      "Predict the color or number. Green/Red pays 2x, Violet pays 4.5x, Number pays 9x!",
     timer: 60,
   },
   k3: {
-    name: 'K3 Dice',
-    emoji: '🎲',
-    gradient: 'from-yellow-400 to-orange-500',
-    description: 'Predict Big (≥11) or Small (<11), Odd or Even. Pays 2x!',
+    name: "K3 Dice",
+    emoji: "🎲",
+    gradient: "from-yellow-400 to-orange-500",
+    description: "Predict Big (≥11) or Small (<11), Odd or Even. Pays 2x!",
     timer: 60,
   },
-  '5d': {
-    name: '5D Lottery',
-    emoji: '🔢',
-    gradient: 'from-blue-400 to-indigo-600',
-    description: 'Pick a number (0-9) for each of 5 positions. More matches = bigger wins!',
+  "5d": {
+    name: "5D Lottery",
+    emoji: "🔢",
+    gradient: "from-blue-400 to-indigo-600",
+    description:
+      "Pick a number (0-9) for each of 5 positions. More matches = bigger wins!",
     timer: 300,
   },
   mines: {
-    name: 'Mines',
-    emoji: '💎',
-    gradient: 'from-purple-500 to-violet-700',
-    description: 'Reveal gems on a 5x5 grid. Avoid mines! Cash out anytime.',
+    name: "Mines",
+    emoji: "💎",
+    gradient: "from-purple-500 to-violet-700",
+    description: "Reveal gems on a 5x5 grid. Avoid mines! Cash out anytime.",
     timer: null,
   },
   aviator: {
-    name: 'Aviator',
-    emoji: '✈️',
-    gradient: 'from-red-600 to-rose-800',
-    description: 'Watch the plane fly! Cash out before it crashes!',
+    name: "Aviator",
+    emoji: <Helicopter/>,
+    gradient: "from-red-600 to-rose-800",
+    description: "Watch the plane fly! Cash out before it crashes!",
     timer: null,
   },
   racing: {
-    name: 'Moto Racing',
-    emoji: '🏍️',
-    gradient: 'from-red-500 to-pink-600',
-    description: 'Pick your racer. If they win, you get 3.5x your bet!',
+    name: "Moto Racing",
+    emoji: "🏍️",
+    gradient: "from-red-500 to-pink-600",
+    description: "Pick your racer. If they win, you get 3.5x your bet!",
     timer: 30,
   },
 };
@@ -361,54 +365,93 @@ function AviatorGameUI({ betAmount, user, onResult, onBalanceUpdate }) {
       <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 rounded-2xl p-4 relative overflow-hidden h-52">
         {/* Stars */}
         {[...Array(15)].map((_, i) => (
-          <div key={i} className="absolute w-1 h-1 bg-white/30 rounded-full animate-pulse"
-            style={{ left: `${(i * 37) % 100}%`, top: `${(i * 23) % 60}%`, animationDelay: `${i * 0.3}s` }} />
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white/30 rounded-full animate-pulse"
+            style={{
+              left: `${(i * 37) % 100}%`,
+              top: `${(i * 23) % 60}%`,
+              animationDelay: `${i * 0.3}s`,
+            }}
+          />
         ))}
-        
+
         {/* Trail line */}
         {trail.length > 1 && (
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 160" preserveAspectRatio="none">
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 300 160"
+            preserveAspectRatio="none"
+          >
             <path
-              d={trail.map((p, i) => `${i === 0 ? 'M' : 'L'} ${Math.min(p.x, 280)} ${150 - p.y * 1.5}`).join(' ')}
+              d={trail
+                .map(
+                  (p, i) =>
+                    `${i === 0 ? "M" : "L"} ${Math.min(p.x, 280)} ${150 - p.y * 1.5}`,
+                )
+                .join(" ")}
               fill="none"
-              stroke={phase === 'crashed' ? '#EF4444' : '#22C55E'}
+              stroke={phase === "crashed" ? "#EF4444" : "#22C55E"}
               strokeWidth="2"
               strokeLinecap="round"
             />
             <path
-              d={trail.map((p, i) => `${i === 0 ? 'M' : 'L'} ${Math.min(p.x, 280)} ${150 - p.y * 1.5}`).join(' ') + ` L ${Math.min(trail[trail.length-1]?.x || 0, 280)} 160 L ${trail[0]?.x || 0} 160 Z`}
-              fill={phase === 'crashed' ? 'rgba(239,68,68,0.1)' : 'rgba(34,197,94,0.1)'}
+              d={
+                trail
+                  .map(
+                    (p, i) =>
+                      `${i === 0 ? "M" : "L"} ${Math.min(p.x, 280)} ${150 - p.y * 1.5}`,
+                  )
+                  .join(" ") +
+                ` L ${Math.min(trail[trail.length - 1]?.x || 0, 280)} 160 L ${trail[0]?.x || 0} 160 Z`
+              }
+              fill={
+                phase === "crashed"
+                  ? "rgba(239,68,68,0.1)"
+                  : "rgba(34,197,94,0.1)"
+              }
             />
           </svg>
         )}
-        
+
         {/* Airplane */}
-        {phase !== 'idle' && (
+        {phase !== "idle" && (
           <motion.div
             className="absolute text-3xl"
             style={{
-              left: `${Math.min(20 + (trail.length * 1.5), 75)}%`,
+              left: `${Math.min(20 + trail.length * 1.5, 75)}%`,
               bottom: `${10 + planeY}%`,
             }}
-            animate={phase === 'crashed' ? {
-              rotate: [0, 45, 90, 180],
-              y: [0, 20, 80, 150],
-              opacity: [1, 1, 0.5, 0],
-              scale: [1, 1.2, 0.8, 0.3],
-            } : {
-              rotate: [-10, -15, -10],
-            }}
-            transition={phase === 'crashed' ? { duration: 1 } : { duration: 1, repeat: Infinity }}
+            animate={
+              phase === "crashed"
+                ? {
+                    rotate: [0, 45, 90, 180],
+                    y: [0, 20, 80, 150],
+                    opacity: [1, 1, 0.5, 0],
+                    scale: [1, 1.2, 0.8, 0.3],
+                  }
+                : {
+                    rotate: [-10, -15, -10],
+                  }
+            }
+            transition={
+              phase === "crashed"
+                ? { duration: 1 }
+                : { duration: 1, repeat: Infinity }
+            }
           >
-            ✈️
+            <Helicopter color="red" size={48} />;
           </motion.div>
         )}
 
         {/* Crash explosion */}
-        {phase === 'crashed' && (
+        {phase === "crashed" && (
           <motion.div
             className="absolute text-5xl"
-            style={{ left: `${Math.min(20 + (trail.length * 1.5), 75)}%`, bottom: `${10 + planeY}%` }}
+            style={{
+              left: `${Math.min(20 + trail.length * 1.5, 75)}%`,
+              bottom: `${10 + planeY}%`,
+            }}
             initial={{ scale: 0, opacity: 1 }}
             animate={{ scale: [0, 2, 3], opacity: [1, 1, 0] }}
             transition={{ duration: 1 }}
@@ -421,20 +464,31 @@ function AviatorGameUI({ betAmount, user, onResult, onBalanceUpdate }) {
         <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center">
           <motion.p
             className={`text-4xl font-extrabold font-mono ${
-              phase === 'crashed' ? 'text-red-500' : phase === 'cashedOut' ? 'text-green-400' : 'text-white'
+              phase === "crashed"
+                ? "text-red-500"
+                : phase === "cashedOut"
+                  ? "text-green-400"
+                  : "text-white"
             }`}
-            animate={phase === 'flying' ? { scale: [1, 1.05, 1] } : {}}
+            animate={phase === "flying" ? { scale: [1, 1.05, 1] } : {}}
             transition={{ duration: 0.5, repeat: Infinity }}
           >
             {multiplier.toFixed(2)}x
           </motion.p>
-          <p className={`text-xs font-bold mt-1 ${
-            phase === 'crashed' ? 'text-red-400' : phase === 'cashedOut' ? 'text-green-300' : 'text-white/50'
-          }`}>
-            {phase === 'idle' && 'Place bet & start'}
-            {phase === 'flying' && '🔥 FLYING...'}
-            {phase === 'crashed' && '💥 CRASHED!'}
-            {phase === 'cashedOut' && `✅ Cashed Out! Won ₹${Math.floor(betAmount * multiplier)}`}
+          <p
+            className={`text-xs font-bold mt-1 ${
+              phase === "crashed"
+                ? "text-red-400"
+                : phase === "cashedOut"
+                  ? "text-green-300"
+                  : "text-white/50"
+            }`}
+          >
+            {phase === "idle" && "Place bet & start"}
+            {phase === "flying" && "🔥 FLYING..."}
+            {phase === "crashed" && "💥 CRASHED!"}
+            {phase === "cashedOut" &&
+              `✅ Cashed Out! Won ₹${Math.floor(betAmount * multiplier)}`}
           </p>
         </div>
       </div>
@@ -443,14 +497,18 @@ function AviatorGameUI({ betAmount, user, onResult, onBalanceUpdate }) {
       <div className="grid grid-cols-2 gap-2 mt-3">
         <button
           onClick={startFlight}
-          disabled={phase === 'flying'}
+          disabled={phase === "flying"}
           className="py-3.5 bg-blue-500 text-white font-bold rounded-xl disabled:opacity-40 text-sm transition-all hover:bg-blue-600"
         >
-          {phase === 'idle' ? `🛫 Start (₹${betAmount})` : phase === 'flying' ? '✈️ Flying...' : '🔄 Play Again'}
+          {phase === "idle"
+            ? `🛫 Start (₹${betAmount})`
+            : phase === "flying"
+              ? `${<Helicopter/>} Flying...`
+              : "🔄 Play Again"}
         </button>
         <button
           onClick={cashOut}
-          disabled={phase !== 'flying'}
+          disabled={phase !== "flying"}
           className="py-3.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl disabled:opacity-40 text-sm transition-all"
         >
           💰 Cash Out ({multiplier.toFixed(2)}x)

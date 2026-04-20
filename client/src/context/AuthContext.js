@@ -1,6 +1,5 @@
 'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
 import { authAPI } from '@/services/api';
 
 const AuthContext = createContext(null);
@@ -14,7 +13,11 @@ export function AuthProvider({ children }) {
   }, []);
 
   const checkAuth = async () => {
-    const token = Cookies.get('token');
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+    const token = localStorage.getItem('token');
     if (!token) {
       setLoading(false);
       return;
@@ -26,27 +29,27 @@ export function AuthProvider({ children }) {
       ]);
       setUser(res.data.user);
     } catch {
-      Cookies.remove('token');
+      localStorage.removeItem('token');
     }
     setLoading(false);
   };
 
   const login = async (email, password) => {
     const res = await authAPI.login({ email, password });
-    Cookies.set('token', res.data.token, { expires: 7 });
+    if (typeof window !== 'undefined') localStorage.setItem('token', res.data.token);
     setUser(res.data.user);
     return res.data;
   };
 
   const signup = async (data) => {
     const res = await authAPI.signup(data);
-    Cookies.set('token', res.data.token, { expires: 7 });
+    if (typeof window !== 'undefined') localStorage.setItem('token', res.data.token);
     setUser(res.data.user);
     return res.data;
   };
 
   const logout = () => {
-    Cookies.remove('token');
+    if (typeof window !== 'undefined') localStorage.removeItem('token');
     setUser(null);
     window.location.href = '/login';
   };

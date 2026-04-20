@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { gamesAPI, activityAPI } from '@/services/api';
 import { FiRefreshCw } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { Helicopter } from 'lucide-react';
 
 const BANNERS = [
   { id: 1, title: 'WINSTREAK BONUS', subtitle: 'Up to ₹10,000', gradient: 'from-red-500 via-orange-500 to-yellow-500' },
@@ -26,8 +27,20 @@ const LOTTERY_GAMES = [
 ];
 
 const MINI_GAMES = [
-  { id: 'mines', name: 'Mines', emoji: '💎', desc: 'Free to Play!', color: 'from-purple-500 to-violet-700' },
-  { id: 'aviator', name: 'Aviator', emoji: '✈️', desc: 'Cash Out!', color: 'from-red-600 to-rose-800' },
+  {
+    id: "mines",
+    name: "Mines",
+    emoji: "💎",
+    desc: "Free to Play!",
+    color: "from-purple-500 to-violet-700",
+  },
+  {
+    id: "aviator",
+    name: "Aviator",
+    emoji: <Helicopter />,
+    desc: "Cash Out!",
+    color: "from-red-600 to-rose-800",
+  },
 ];
 
 export default function HomePage() {

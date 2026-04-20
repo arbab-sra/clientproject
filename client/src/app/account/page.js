@@ -95,12 +95,12 @@ function AccountContent() {
   ];
 
   const serviceItems = [
-    { icon: FiSettings, label: 'Settings' },
-    { icon: FiMessageCircle, label: 'Feedback' },
-    { icon: FiVolume2, label: 'Announcement' },
-    { icon: FiHelpCircle, label: 'Customer Service' },
-    { icon: FiInfo, label: "Beginner's Guide" },
-    { icon: FiInfo, label: 'About Us' },
+    { icon: FiSettings, label: 'Settings', href: '/settings' },
+    { icon: FiMessageCircle, label: 'Feedback', href: '/feedback' },
+    { icon: FiVolume2, label: 'Announcement', href: '/announcement' },
+    { icon: FiHelpCircle, label: 'Customer Service', href: '/customer-service' },
+    { icon: FiInfo, label: "Beginner's Guide", href: '/beginners-guide' },
+    { icon: FiInfo, label: 'About Us', href: '/about' },
   ];
 
   return (
@@ -251,12 +251,12 @@ function AccountContent() {
         <div className="bg-white rounded-2xl p-4 shadow-sm">
           <div className="grid grid-cols-3 gap-4">
             {serviceItems.map(item => (
-              <button key={item.label} className="flex flex-col items-center gap-1.5 py-2 hover:bg-gray-50 rounded-xl transition-colors">
+              <Link href={item.href} key={item.label} className="flex flex-col items-center gap-1.5 py-2 hover:bg-gray-50 rounded-xl transition-colors">
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
                   <item.icon className="w-4 h-4 text-primary" />
                 </div>
                 <span className="text-dark text-[10px] font-medium text-center">{item.label}</span>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
