@@ -18,31 +18,35 @@ A complete gaming platform web app inspired by 91 Club, featuring:
 ## Pages & Screenshots
 
 ### Login Page
+
 Gradient header with game controller icon, clean form, demo account button.
 
-![Login Page](/Users/arbab/.gemini/antigravity/brain/521785c0-a8c5-4329-8314-e63dcbd3fb37/login_page_1775271934608.png)
-
 ### Home Page (After Login)
+
 Banner carousel, wallet balance (₹515.00), Wheel of Fortune quick access, game categories, recommended games grid, and live activity ticker.
 
 ![Home Page](/Users/arbab/.gemini/antigravity/brain/521785c0-a8c5-4329-8314-e63dcbd3fb37/after_login_1775271951405.png)
 
 ### Account Page
+
 User profile with VIP badge, UID, balance card, quick actions (ARWallet, Deposit, Withdraw, VIP), history grid, menu items, and service center.
 
 ![Account Page](/Users/arbab/.gemini/antigravity/brain/521785c0-a8c5-4329-8314-e63dcbd3fb37/account_page_1775271959160.png)
 
 ### Deposit Page
+
 Payment methods (UPI-QR, Paytm, Bank Card, USDT), channel selector, preset amounts grid (₹100 to ₹5K), custom input, recharge instructions.
 
 ![Deposit Page](/Users/arbab/.gemini/antigravity/brain/521785c0-a8c5-4329-8314-e63dcbd3fb37/deposit_page_1775271961676.png)
 
 ### Spinner / Wheel of Fortune
+
 Animated SVG wheel with 8 segments, 2 free trial spins, cash out button, invite friends CTA, spin history.
 
 ![Spinner Page](/Users/arbab/.gemini/antigravity/brain/521785c0-a8c5-4329-8314-e63dcbd3fb37/spinner_page_1775271964137.png)
 
 ### Win Go Game
+
 Color prediction game with Green/Violet/Red options, number picker (0-9), bet amount selector, game timer, and game history.
 
 ![Win Go Game](/Users/arbab/.gemini/antigravity/brain/521785c0-a8c5-4329-8314-e63dcbd3fb37/wingo_page_1775271967008.png)
@@ -108,24 +112,26 @@ clientproject/
 
 ## The 6 Playable Games
 
-| Game | Type | How to Win | Payout |
-|------|------|------------|--------|
-| 🎯 **Win Go** | Color Prediction | Pick Red/Green/Violet or number 0-9 | 2x / 4.5x / 9x |
-| 🎲 **K3 Dice** | Dice Game | Big/Small, Odd/Even, or exact sum | 2x / 6x |
-| 🔢 **5D Lottery** | Number Lottery | Match 1-5 numbers in positions | 2x to 100,000x |
-| 💎 **Mines** | Grid Game | Reveal gems, avoid mines, cash out | 1.2x per gem |
-| ✈️ **Aviator** | Crash Game | Cash out before the plane crashes | Variable |
-| 🏍️ **Moto Racing** | Betting | Pick the winning racer | 3.5x |
+| Game                      | Type             | How to Win                          | Payout         |
+| ------------------------- | ---------------- | ----------------------------------- | -------------- |
+| 🎯**Win Go**        | Color Prediction | Pick Red/Green/Violet or number 0-9 | 2x / 4.5x / 9x |
+| 🎲**K3 Dice**       | Dice Game        | Big/Small, Odd/Even, or exact sum   | 2x / 6x        |
+| 🔢**5D Lottery**    | Number Lottery   | Match 1-5 numbers in positions      | 2x to 100,000x |
+| 💎**Mines**         | Grid Game        | Reveal gems, avoid mines, cash out  | 1.2x per gem   |
+| ✈️**Aviator**     | Crash Game       | Cash out before the plane crashes   | Variable       |
+| 🏍️**Moto Racing** | Betting          | Pick the winning racer              | 3.5x           |
 
 ---
 
 ## How to Run
 
 ### Prerequisites
+
 - Node.js 18+
 - Docker (for MongoDB)
 
 ### Start Everything
+
 ```bash
 # 1. Start MongoDB
 docker run -d --name gamezone-mongo -p 27017:27017 mongo:7
@@ -143,6 +149,7 @@ npm run dev           # Starts on port 3000
 ```
 
 ### Demo Account
+
 - **Email:** demo@gamezone.com
 - **Password:** demo123
 - **Balance:** ₹515.00
@@ -151,17 +158,17 @@ npm run dev           # Starts on port 3000
 
 ## Key Configuration (server/.env)
 
-| Setting | Value |
-|---------|-------|
-| Signup Bonus | ₹15 |
-| Min Deposit | ₹20 |
-| Max Deposit | ₹10,000 |
-| Min Withdrawal | ₹200 |
-| Max Withdrawal | ₹5,000 |
-| Game Entry Fee | ₹100 |
-| Spinner Max Win | ₹5 (actual) |
-| Spinner Free Trials | 2 |
-| Spinner Daily Limit | 1/day |
+| Setting             | Value        |
+| ------------------- | ------------ |
+| Signup Bonus        | ₹15         |
+| Min Deposit         | ₹20         |
+| Max Deposit         | ₹10,000     |
+| Min Withdrawal      | ₹200        |
+| Max Withdrawal      | ₹5,000      |
+| Game Entry Fee      | ₹100        |
+| Spinner Max Win     | ₹5 (actual) |
+| Spinner Free Trials | 2            |
+| Spinner Daily Limit | 1/day        |
 
 ---
 
